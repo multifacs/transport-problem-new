@@ -1,4 +1,6 @@
 import numpy as np
+from tp_potential import Data
+
 # importing the library
 from memory_profiler import profile
 from env import TESTING
@@ -7,7 +9,11 @@ from misc import timeout
 
 # @profile
 @timeout(1)
-def vogels_approximation_method(cost_matrix, supply, demand):
+def vogels_approximation_method(data: Data, method: str):
+    cost_matrix = data.c
+    supply = data.a
+    demand = data.b
+
     num_sources = len(supply)
     num_destinations = len(demand)
     

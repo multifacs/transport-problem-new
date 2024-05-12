@@ -4,8 +4,13 @@ from scipy.optimize import linprog
 # importing the library
 from memory_profiler import profile
 from env import TESTING
+from tp_potential import Data
 
-def simplex_method(cost_matrix, supply, demand, method="simplex"):
+
+def simplex_method(data: Data, method: str):
+    cost_matrix = data.c
+    supply = data.a
+    demand = data.b
     # Create the coefficient matrix for the constraints
     num_sources = len(supply)
     num_destinations = len(demand)

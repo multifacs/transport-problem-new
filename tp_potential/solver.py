@@ -15,9 +15,10 @@ from .plan import (find_cycle_path, get_start_plan_by_min_element_method,
 
 MAX_ITER = 100
 
+
 # @profile
 @timeout(1)
-def solve(data: Data, use_nw_corner_method: bool = False):
+def solve(data: Data, method: str, use_nw_corner_method: bool = False):
     try:
         if use_nw_corner_method:
             x = get_start_plan_by_north_west_corner_method(data)
@@ -41,13 +42,13 @@ def solve(data: Data, use_nw_corner_method: bool = False):
 
             cycle_path = find_cycle_path(x, data.get_best_free_cell(x, p))
             o = recalculate_plan(x, cycle_path)
-            
+
         # print(f"Iterations: {iter}")
         # print(x)
         # print(data.calculate_cost(x))
     except Exception as e:
         print(e)
-        
+
     return x, data.calculate_cost(x)
 
 # if TESTING:

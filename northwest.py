@@ -2,8 +2,13 @@ import numpy as np
 # importing the library
 from memory_profiler import profile
 from env import TESTING
+from tp_potential import Data
 
-def northwest_corner_method(cost_matrix, supply, demand):
+
+def northwest_corner_method(data: Data, method: str):
+    cost_matrix = data.c
+    supply = data.a
+    demand = data.b
     num_sources = len(supply)
     num_destinations = len(demand)
     
