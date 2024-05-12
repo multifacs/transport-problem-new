@@ -1,0 +1,46 @@
+Filename: c:\Users\Nick\Documents\Programming\Python\transport-problem\tp_potential\solver.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    18    100.9 MiB    100.9 MiB           1   @timeout(1)
+    19                                         @profile
+    20                                         def solve(data: Data, use_nw_corner_method: bool = False):
+    21    100.9 MiB      0.0 MiB           1       try:
+    22    100.9 MiB      0.0 MiB           1           if use_nw_corner_method:
+    23                                                     x = get_start_plan_by_north_west_corner_method(data)
+    24                                                 else:
+    25    100.9 MiB      0.0 MiB           1               x = get_start_plan_by_min_element_method(data)
+    26                                                 # x = data.c
+    27                                                 # print(x)
+    28                                         
+    29    100.9 MiB      0.0 MiB           1           check_res = is_degenerate_plan(x)
+    30    100.9 MiB      0.0 MiB           1           if check_res:
+    31                                                     make_start_plan_non_degenerate(x)
+    32                                         
+    33    100.9 MiB      0.0 MiB           1           iter = 0
+    34    100.9 MiB      0.0 MiB           3           while iter < MAX_ITER:
+    35    100.9 MiB      0.0 MiB           3               iter += 1
+    36    100.9 MiB      0.0 MiB           3               cost = data.calculate_cost(x)
+    37    100.9 MiB      0.0 MiB           3               p = data.calculate_potentials(x)
+    38    100.9 MiB      0.0 MiB           3               check_res = data.is_plan_optimal(x, p)
+    39    100.9 MiB      0.0 MiB           3               if check_res:
+    40    100.9 MiB      0.0 MiB           1                   break
+    41                                         
+    42    100.9 MiB      0.0 MiB           2               cycle_path = find_cycle_path(x, data.get_best_free_cell(x, p))
+    43    100.9 MiB      0.0 MiB           2               o = recalculate_plan(x, cycle_path)
+    44                                                     
+    45                                                 # print(f"Iterations: {iter}")
+    46                                                 # print(x)
+    47                                                 # print(data.calculate_cost(x))
+    48                                             except Exception as e:
+    49                                                 print(e)
+    50                                                 
+    51    100.9 MiB      0.0 MiB           1       return x, data.calculate_cost(x)
+
+
+[[ 0.  8.  0.  0.  0.  0.]
+ [ 0.  0.  4. 17. 15.  0.]
+ [ 8.  0.  0.  0.  6. 18.]
+ [ 0.  1. 12.  0.  0.  0.]
+ [21.  0.  0.  0.  0.  0.]]
+Potential method cost:  211.0

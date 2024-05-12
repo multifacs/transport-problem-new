@@ -1,0 +1,57 @@
+Filename: c:\Users\Nick\Documents\Programming\Python\transport-problem\least.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+     6    101.4 MiB    101.4 MiB           1   def least_cost_cell_method(cost_matrix, supply, demand):
+     7    101.4 MiB      0.0 MiB           1       num_sources = len(supply)
+     8    101.4 MiB      0.0 MiB           1       num_destinations = len(demand)
+     9                                             
+    10                                             # Initialize the transportation matrix
+    11    101.4 MiB      0.0 MiB           1       transport_matrix = np.zeros((num_sources, num_destinations))
+    12                                             
+    13                                             # Create a copy of the cost matrix for tracking remaining cells
+    14    101.4 MiB      0.0 MiB           1       remaining_matrix = cost_matrix.copy()
+    15                                             
+    16                                             # Define a large finite value to represent allocated cells
+    17    101.4 MiB      0.0 MiB           1       ALLOCATED = 1e5
+    18                                             
+    19                                             # Iterate until all supplies and demands are exhausted
+    20    101.4 MiB      0.0 MiB          11       while np.sum(supply) > 0 and np.sum(demand) > 0:
+    21                                                 # Find the cell with the minimum cost
+    22    101.4 MiB      0.0 MiB          10           min_cost = np.min(remaining_matrix)
+    23    101.4 MiB      0.0 MiB          10           min_cost_indices = np.argwhere(remaining_matrix == min_cost)
+    24                                                 
+    25                                                 # Select the first occurrence of the minimum cost cell
+    26    101.4 MiB      0.0 MiB          10           i, j = min_cost_indices[0]
+    27                                                 
+    28                                                 # Determine the allocation for the selected cell
+    29    101.4 MiB      0.0 MiB          10           allocation = min(supply[i], demand[j])
+    30    101.4 MiB      0.0 MiB          10           transport_matrix[i, j] = allocation
+    31                                                 
+    32                                                 # Update the remaining supply and demand
+    33    101.4 MiB      0.0 MiB          10           supply[i] -= allocation
+    34    101.4 MiB      0.0 MiB          10           demand[j] -= allocation
+    35                                                 
+    36                                                 # Mark the cell as allocated by setting its cost to the large finite value
+    37    101.4 MiB      0.0 MiB          10           remaining_matrix[i, j] = ALLOCATED
+    38                                                 
+    39                                                 # If the supply at the current source is exhausted, mark the corresponding row as allocated
+    40    101.4 MiB      0.0 MiB          10           if supply[i] == 0:
+    41    101.4 MiB      0.0 MiB           5               remaining_matrix[i, :] = ALLOCATED
+    42                                                 
+    43                                                 # If the demand at the current destination is satisfied, mark the corresponding column as allocated
+    44    101.4 MiB      0.0 MiB          10           if demand[j] == 0:
+    45    101.4 MiB      0.0 MiB           6               remaining_matrix[:, j] = ALLOCATED
+    46                                             
+    47                                             # Calculate the total transportation cost
+    48    101.4 MiB      0.0 MiB           1       total_cost = np.sum(cost_matrix * transport_matrix)
+    49                                             
+    50    101.4 MiB      0.0 MiB           1       return transport_matrix, total_cost
+
+
+[[ 2. 20.  0.  0.  0.  4.]
+ [ 0.  0.  0.  0. 38.  0.]
+ [ 0.  5. 11.  0.  0.  0.]
+ [ 0.  0.  0. 22. 12.  6.]
+ [26.  0.  0.  0.  0.  0.]]
+Least Cost Cell method cost:  443.0

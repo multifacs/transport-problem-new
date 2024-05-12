@@ -1,0 +1,40 @@
+Filename: c:\Users\Nick\Documents\Programming\Python\transport-problem\northwest.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+     6    101.4 MiB    101.4 MiB           1   def northwest_corner_method(cost_matrix, supply, demand):
+     7    101.4 MiB      0.0 MiB           1       num_sources = len(supply)
+     8    101.4 MiB      0.0 MiB           1       num_destinations = len(demand)
+     9                                             
+    10                                             # Initialize the transportation matrix
+    11    101.4 MiB      0.0 MiB           1       transport_matrix = np.zeros((num_sources, num_destinations))
+    12                                             
+    13                                             # Iterate over the sources and destinations
+    14    101.4 MiB      0.0 MiB           1       i = 0
+    15    101.4 MiB      0.0 MiB           1       j = 0
+    16    101.4 MiB      0.0 MiB          10       while i < num_sources and j < num_destinations:
+    17    101.4 MiB      0.0 MiB           9           if supply[i] < demand[j]:
+    18    101.4 MiB      0.0 MiB           3               transport_matrix[i, j] = supply[i]
+    19    101.4 MiB      0.0 MiB           3               demand[j] -= supply[i]
+    20    101.4 MiB      0.0 MiB           3               i += 1
+    21    101.4 MiB      0.0 MiB           6           elif supply[i] > demand[j]:
+    22    101.4 MiB      0.0 MiB           4               transport_matrix[i, j] = demand[j]
+    23    101.4 MiB      0.0 MiB           4               supply[i] -= demand[j]
+    24    101.4 MiB      0.0 MiB           4               j += 1
+    25                                                 else:
+    26    101.4 MiB      0.0 MiB           2               transport_matrix[i, j] = supply[i]
+    27    101.4 MiB      0.0 MiB           2               i += 1
+    28    101.4 MiB      0.0 MiB           2               j += 1
+    29                                             
+    30                                             # Calculate the total transportation cost
+    31    101.4 MiB      0.0 MiB           1       total_cost = np.sum(cost_matrix * transport_matrix)
+    32                                             
+    33    101.4 MiB      0.0 MiB           1       return transport_matrix, total_cost
+
+
+[[26.  0.  0.  0.  0.  0.]
+ [ 2. 25. 11.  0.  0.  0.]
+ [ 0.  0.  0. 16.  0.  0.]
+ [ 0.  0.  0.  6. 34.  0.]
+ [ 0.  0.  0.  0. 16. 10.]]
+Nowrthwest method cost:  729.0
