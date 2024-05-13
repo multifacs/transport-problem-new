@@ -17,7 +17,7 @@ MAX_ITER = 100
 
 
 # @profile
-@timeout(1)
+@timeout(2)
 def solve(data: Data, method: str, use_nw_corner_method: bool = False):
     try:
         if use_nw_corner_method:

@@ -8,7 +8,7 @@ from env import TESTING
 from misc import timeout
 
 # @profile
-@timeout(1)
+@timeout(2)
 def vogels_approximation_method(data: Data, method: str):
     cost_matrix = data.c
     supply = data.a
